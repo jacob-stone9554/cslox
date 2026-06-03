@@ -1,0 +1,32 @@
+# build outputs
+bin/
+obj/
+out/
+
+# local/user settings
+.user
+.suo
+.userprefs
+launchSettings.json
+
+# NuGet 
+*.nupkg
+*.snupkg
+.nuget/
+nuget.config
+
+# Rider
+.idea/
+*.sln.iml
+
+# Windows/OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets/Env
+*.env
+.env.*
+appsettings.Local.json
+appsettings.Development.json
+secrets.json
