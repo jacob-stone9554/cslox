@@ -21,6 +21,8 @@ public class Lox
     {
         string source = File.ReadAllText(path);
         //Run(source);
+        
+        if(hadError) Environment.Exit(65);
     }
 
     private static void RunPrompt()
@@ -32,6 +34,7 @@ public class Lox
             Console.WriteLine("> ");
             if (line == null) break;
             // Run(line);
+            hadError = false;
         }
     }
 
