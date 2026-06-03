@@ -2,6 +2,7 @@
 
 public class Lox
 {
+    private static bool hadError = false;
     public static void Main(string[] args)
     {
         if (args.Length > 1)
@@ -43,5 +44,16 @@ public class Lox
         {
             Console.WriteLine(token);
         }
+    }
+
+    static void Error(int line, string message)
+    {
+        Report(line, "", message);
+    }
+
+    private static void Report(int line, string where, string message)
+    {
+        Console.Error.WriteLine($"[Line {line}] Error {where}: {message}");
+        hadError = true;
     }
 }
