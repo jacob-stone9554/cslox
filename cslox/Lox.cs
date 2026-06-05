@@ -5,35 +5,39 @@ public class Lox
     private static bool hadError = false;
     public static void Main(string[] args)
     {
-        if (args.Length > 1)
+
+        switch (args.Length)
         {
-            Console.WriteLine("Usage: cslox [script]");
-            Environment.Exit(64);
+            case > 1:
+                Console.WriteLine("Usage: cslox <file>");
+                Environment.Exit(64);
+                break;
+            case 1:
+                RunFile(args[0]);
+                break;
+            default:
+                RunPrompt();
+                break;
         }
-        else if (args.Length == 1)
-        {
-            RunFile(args[0]);
-        }
-        
     }
     
     private static void RunFile(string path)
     {
         string source = File.ReadAllText(path);
-        //Run(source);
+        Run(source);
         
         if(hadError) Environment.Exit(65);
     }
 
     private static void RunPrompt()
     {
-        string line = Console.ReadLine();
+        var line = Console.ReadLine();
 
         for (;;)
         {
             Console.WriteLine("> ");
             if (line == null) break;
-            // Run(line);
+            Run(line);
             hadError = false;
         }
     }
