@@ -31,12 +31,13 @@ public class Lox
 
     private static void RunPrompt()
     {
-        var line = Console.ReadLine();
-
         for (;;)
         {
-            Console.WriteLine("> ");
+            Console.Write("> ");
+            var line = Console.ReadLine();
+            
             if (line == null) break;
+            
             Run(line);
             hadError = false;
         }
