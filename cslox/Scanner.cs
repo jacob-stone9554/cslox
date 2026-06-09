@@ -130,7 +130,10 @@ public class Scanner
                 {
                     Identifier();
                 }
-                Lox.Error(line, "Unexpected character.");
+                else
+                {
+                    Lox.Error(line, "Unexpected character.");   
+                }
                 break;
         }
     }
@@ -147,7 +150,7 @@ public class Scanner
 
     private void AddToken(TokenType type, Object literal)
     {
-        string text = source.Substring(start, current);
+        string text = source.Substring(start, current - start);
         tokens.Add(new Token(type, text, literal, line));
     }
     
@@ -187,7 +190,7 @@ public class Scanner
         
         Advance(); // the closing "
 
-        var value = source.Substring(start + 1, current - 1);
+        var value = source.Substring(start + 1, current - start - 2);
         AddToken(TokenType.STRING, value);
     }
 
@@ -208,7 +211,7 @@ public class Scanner
         }
         
         AddToken(TokenType.NUMBER, 
-            Double.Parse(source.Substring(start, current)));
+            Double.Parse(source.Substring(start, current - start)));
     }
 
     private char PeekNext()
@@ -232,8 +235,7 @@ public class Scanner
     private void Identifier()
     {
         while (IsAlphaNumeric(Peek())) Advance();
-
-        // TODO: Fix other substrings to use length rather than start/end indexes. C# uses Substring(start, length) not Substring(start, end)
+        
         int length = current - start;
         string text = source.Substring(start, length);
 
