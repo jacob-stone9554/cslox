@@ -1,7 +1,7 @@
 namespace cslox;
 public abstract class Expr
 {
-   public interface IVisitor<T> {
+   interface IVisitor<T> {
    T VisitBinaryExpr(Binary expr);
    T VisitGroupingExpr(Grouping expr);
    T VisitLiteralExpr(Literal expr);

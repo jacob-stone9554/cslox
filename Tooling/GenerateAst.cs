@@ -29,6 +29,12 @@ public class GenerateAst
             writer.WriteLine("namespace cslox;");
             writer.WriteLine($"public abstract class {baseName}");
             writer.WriteLine("{");
+            
+            DefineVisitor(writer, baseName, types);
+            
+            writer.WriteLine();
+            writer.WriteLine("   public abstract T Accept<T>(IVisitor<T> visitor);");
+            
             writer.WriteLine("}");
             writer.WriteLine();
 
@@ -67,7 +73,23 @@ public class GenerateAst
         }
         
         writer.WriteLine("          }");
-        writer.WriteLine("      }");
         writer.WriteLine();
+        writer.WriteLine($"      public override T Accept<T>(IVisitor<T> visitor) => visitor.Visit{className}{baseName}(this);");
+        
+        writer.WriteLine("   }");
+        writer.WriteLine();
+    }
+
+    private static void DefineVisitor(StreamWriter writer, string baseName, List<string> types)
+    {
+        writer.WriteLine("   public interface IVisitor<T> {");
+        
+        foreach(var type in types)
+        {
+            var typeName = type.Split(":")[0].Trim();
+            writer.WriteLine($"   T Visit{typeName}{baseName}({typeName} {baseName.ToLower()});");
+        }
+        
+        writer.WriteLine("  }");
     }
 }
